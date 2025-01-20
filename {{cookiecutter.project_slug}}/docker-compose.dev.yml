@@ -1,0 +1,65 @@
+services:
+  {{cookiecutter.project_slug}}-app-dev:
+    container_name: {{cookiecutter.project_slug}}-app-dev
+    restart: always
+    build:
+      context: ./
+      dockerfile: dockerization/dev.Dockerfile
+    networks:
+      - {{cookiecutter.project_slug}}_network_dev
+    ports:
+      - "{{cookiecutter.open_port}}:{{cookiecutter.open_port}}"
+    volumes:
+      - .:/app
+    command: python manage.py runserver 0.0.0.0:{{cookiecutter.open_port}}
+    env_file:
+      - .env
+    depends_on:
+        {{cookiecutter.project_slug}}-pg-dev:
+          condition: service_healthy
+
+  {{cookiecutter.project_slug}}-bot-dev:
+    container_name: {{cookiecutter.project_slug}}-bot-dev
+    restart: always
+    build:
+      context: ./
+      dockerfile: dockerization/dev.Dockerfile
+    networks:
+      - {{cookiecutter.project_slug}}_network_dev
+    volumes:
+      - .:/app
+    command: sh -c "find . -name '*.py' -o -name '*.html' -o -name '.env' | entr -r sh -c 'echo \"Restarting...\"; python manage.py start_polling'"
+    env_file:
+      - .env
+    depends_on:
+      {{cookiecutter.project_slug}}-pg-dev:
+        condition: service_healthy
+
+  {{cookiecutter.project_slug}}-pg-dev:
+    container_name: {{cookiecutter.project_slug}}-pg-dev
+    image: postgres:latest
+    env_file: ".env"
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    networks:
+      - {{cookiecutter.project_slug}}_network_dev
+    expose:
+      - "${DB_PORT}"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $DB_USER -d $DB_NAME" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./dockerization/db_init.sql:/docker-entrypoint-initdb.d/auth_db_init.sql
+
+networks:
+  {{cookiecutter.project_slug}}_network_dev:
+    name: {{cookiecutter.project_slug}}_network_dev
+
+volumes:
+  pgdata:

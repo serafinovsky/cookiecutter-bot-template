@@ -1,0 +1,9 @@
+{
+    "bot_name": "Enter bot name",
+    "project_slug": "{{ cookiecutter.bot_name }}",
+    "open_port": 8890,
+    "need_examples": ["yes", "no"],
+    "_copy_without_render": [
+        "**/templates"
+    ]
+}
