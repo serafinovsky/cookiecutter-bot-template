@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = [{ name = "{{cookiecutter.your_name}}", email = "{{cookiecutter.your_email}}" }]
 readme = "README.md"
-requires-python = {% if cookiecutter.python_version == "py311" %} "3.11" {% elif cookiecutter.python_version == "py312" %} "3.12" {% elif cookiecutter.python_version == "py313" %} "3.13" {% endif %}
+requires-python = {% if cookiecutter.python_version == "py311" %} ">=3.11,<3.12" {% elif cookiecutter.python_version == "py312" %} ">=3.12,<3.13" {% elif cookiecutter.python_version == "py313" %} ">=3.13,<3.14" {% endif %}
 dependencies = [
     "django>=5.1.5,<6",
     "python-telegram-bot[ext]~=22.1",
