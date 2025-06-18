@@ -24,21 +24,31 @@ To run the bot in a development environment:
 cp .env.template .env
 ```
 
-2. **Build and Start Containers**:
+2. **Prepare development environment**:
+
+Run the following command to prepare the development environment:
+```bash
+uv lock
+uv sync --frozen --no-default-groups --only-group dev
+ruff format src
+ruff check src --preview --fix
+```
+
+3. **Build and Start Containers**:
 
 Run the following command to build and start the development environment:
 ```bash
 docker compose -f docker-compose.dev.yml up -d --build
 ```
 
-3. **Run migration**:
+4. **Run migration**:
 
 Run the following command to run migrations:
 ```bash
 docker exec {{cookiecutter.project_slug}}-app-dev python manage.py migrate
 ```
 
-4. **Access the Admin Panel**:
+5. **Access the Admin Panel**:
 
 Create superuser:
 ```bash
@@ -46,7 +56,7 @@ docker exec -it {{cookiecutter.project_slug}}-app-dev python manage.py createsup
 ```
 The Django admin panel will be available at http://localhost:{{cookiecutter.open_port}}/admin/
 
-5. **Access the Admin Panel**:
+6. **Access the Admin Panel**:
 
 To stop the development environment, run:
 ```bash

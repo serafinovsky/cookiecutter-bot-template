@@ -53,7 +53,7 @@ select = [
     "C4",       # flake8-comprehensions
     "RUF",      # Ruff-specific
 ]
-ignore = ["E226"]
+ignore = ["E226", "RUF005"]
 
 [tool.ruff.lint.flake8-quotes]
 inline-quotes = "double"

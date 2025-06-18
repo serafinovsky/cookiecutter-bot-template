@@ -1,6 +1,7 @@
-FROM python:3.11.7-bullseye
+{% if cookiecutter.python_version == "py311" %}FROM python:3.11.7-bullseye{% elif cookiecutter.python_version == "py312" %}FROM python:3.12.11-bullseye{% elif cookiecutter.python_version == "py313" %}FROM python:3.13.5-bullseye{% endif %}
 
 ARG DEBIAN_FRONTEND=noninteractive
+ENV UV_VERSION="0.7.13"
 
 RUN apt-get update \
   && apt-get install -y build-essential \
@@ -11,7 +12,7 @@ RUN apt-get update \
 ENV TZ=Europe/Moscow
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-COPY ./requirements.txt /requirements.txt
-RUN pip install --upgrade pip && pip install -r /requirements.txt
+COPY ./uv.lock /uv.lock
+RUN pip install uv==$UV_VERSION && uv sync --frozen --no-install-project --no-dev
 
 WORKDIR /app
