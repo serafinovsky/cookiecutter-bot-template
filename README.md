@@ -9,7 +9,7 @@ Before using this template, ensure you have the following installed:
 * Cookiecutter: Install it using pip:
 
 ```bash
-pip install cookiecutter ruff
+pip install cookiecutter
 ```
 
 ## Usage

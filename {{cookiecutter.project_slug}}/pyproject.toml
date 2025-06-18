@@ -1,20 +1,33 @@
-[tool.ruff]
-line-length = 100
-indent-width = 4
-
-target-version = "py311"
-
-exclude = [
-    ".git",
-    ".mypy_cache",
-    ".venv",
-    "_build",
-    "build",
-    ".*/migrations",
+[project]
+name = "{{cookiecutter.project_slug}}"
+version = "0.1.0"
+description = ""
+authors = [{ name = "{{cookiecutter.your_name}}", email = "{{cookiecutter.your_email}}" }]
+readme = "README.md"
+dependencies = [
+    "django>=5.1.5,<6",
+    "python-telegram-bot[ext]~=22.1",
+    "beautifulsoup4>=4.12.3,<5",
+    "django-environ>=0.12.0,<0.13",
+    "psycopg2>=3.2.9,<4",
+    "gunicorn>=23.0.0,<24",
 ]
 
-[tool.ruff.lint.per-file-ignores]
-"__init__.py" = ["F403"]
+[dependency-groups]
+dev = [
+    "ipython>=8.31.0",
+    "ruff>=0.9.2",
+]
+
+[tool.ruff]
+target-version = "{{cookiecutter.python_version}}"
+line-length = 120
+respect-gitignore = true
+src = ["src"]
+
+extend-exclude = [
+    "migrations",
+]
 
 [tool.ruff.format]
 quote-style = "double"
@@ -22,27 +35,29 @@ indent-style = "space"
 skip-magic-trailing-comma = false
 line-ending = "auto"
 
-[tool.poetry]
-name = "test"
-version = "0.1.0"
-description = ""
-authors = ["Your Name <you@example.com>"]
-readme = "README.md"
+[tool.ruff.lint]
+# List of rules https://docs.astral.sh/ruff/rules/
+select = [
+    "E",        # pycodestyle
+    "W",        # pycodestyle warnings
+    "F",        # pyflakes
+    "I",        # isort
+    "T",        # flake8-print
+    "Q",        # flake8-quotes
+    "N",        # pep8-naming
+    "B",        # flake8-bugbear
+    "ASYNC",    # flake8-async
+    "DJ",       # flake8-django
+    "BLE",      # flake8-blind-except
+    "C4",       # flake8-comprehensions
+    "RUF",      # Ruff-specific
+]
+ignore = ["E226"]
 
-[tool.poetry.dependencies]
-python = "^3.11"
-django = "^5.1.5"
-python-telegram-bot = {extras = ["ext"], version = "^21.10"}
-beautifulsoup4 = "^4.12.3"
-django-environ = "^0.12.0"
-psycopg2 = "^2.9.10"
-gunicorn = "^23.0.0"
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "double"
+multiline-quotes = "double"
+docstring-quotes = "double"
 
-
-[tool.poetry.group.dev.dependencies]
-ipython = "^8.31.0"
-ruff = "^0.9.2"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.ruff.lint.per-file-ignores]
+"*/__init__.py" = ["F401", "F403", "F405"]

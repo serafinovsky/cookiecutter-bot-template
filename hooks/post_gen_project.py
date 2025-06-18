@@ -33,13 +33,6 @@ def main():
         ]:
             remove_file_or_dir(path)
     
-    try:
-        run_command("pip install ruff")
-    except subprocess.CalledProcessError:
-        run_command("uv pip install ruff")
-    run_command("ruff format .")
-    run_command("ruff check --preview --fix .")
-
 
 if __name__ == "__main__":
     main()

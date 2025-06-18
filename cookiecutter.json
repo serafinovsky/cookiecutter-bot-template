@@ -1,8 +1,11 @@
 {
     "bot_name": "Enter bot name",
+    "your_name": "Enter your name",
+    "your_email": "Enter your email",
     "project_slug": "{{ cookiecutter.bot_name }}",
     "open_port": 8890,
     "need_examples": ["yes", "no"],
+    "python_version": ["py311", "py312", "py313"],
     "_copy_without_render": [
         "**/templates"
     ]
