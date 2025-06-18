@@ -15,3 +15,4 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 WORKDIR /app
 COPY src/ .
 RUN pip install uv==$UV_VERSION && uv sync --frozen --no-install-project --no-dev && mkdir -p /var/log/gunicorn && python manage.py collectstatic --no-input -c
+ENV PATH="/app/.venv/bin:${PATH}"

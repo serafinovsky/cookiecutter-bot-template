@@ -14,5 +14,6 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 COPY ./uv.lock /uv.lock
 RUN pip install uv==$UV_VERSION && uv sync --frozen --no-install-project --no-dev
+ENV PATH="/.venv/bin:${PATH}"
 
 WORKDIR /app
