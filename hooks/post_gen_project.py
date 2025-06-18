@@ -32,10 +32,13 @@ def main():
             "{{cookiecutter.project_slug}}/templates/start.html"
         ]:
             remove_file_or_dir(path)
-
-    run_command("pip install ruff")
+    
+    try:
+        run_command("pip install ruff")
+    except subprocess.CalledProcessError:
+        run_command("uv pip install ruff")
     run_command("ruff format .")
-    run_command("ruff check --fix .")
+    run_command("ruff check --preview --fix .")
 
 
 if __name__ == "__main__":
