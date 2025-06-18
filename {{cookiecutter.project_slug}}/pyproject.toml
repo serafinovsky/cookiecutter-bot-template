@@ -24,7 +24,6 @@ dev = [
 target-version = "{{cookiecutter.python_version}}"
 line-length = 120
 respect-gitignore = true
-src = ["{{cookiecutter.project_slug}}"]
 
 extend-exclude = [
     "migrations",
