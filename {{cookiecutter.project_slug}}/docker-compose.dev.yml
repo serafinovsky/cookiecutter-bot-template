@@ -10,7 +10,7 @@ services:
     ports:
       - "{{cookiecutter.open_port}}:{{cookiecutter.open_port}}"
     volumes:
-      - src:/app
+      - ./src:/app
     command: python manage.py runserver 0.0.0.0:{{cookiecutter.open_port}}
     env_file:
       - .env
@@ -27,7 +27,7 @@ services:
     networks:
       - {{cookiecutter.project_slug}}_network_dev
     volumes:
-      - src:/app
+      - ./src:/app
     command: sh -c "find . -name '*.py' -o -name '*.html' -o -name '.env' | entr -r sh -c 'echo \"Restarting...\"; python manage.py start_polling'"
     env_file:
       - .env

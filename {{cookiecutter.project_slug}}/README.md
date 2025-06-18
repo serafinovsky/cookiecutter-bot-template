@@ -23,6 +23,7 @@ To run the bot in a development environment:
 ```bash
 cp .env.template .env
 ```
+After that, fill in the required values in the `.env` file, like `DEV_CHAT` and `BOT_TOKEN`
 
 2. **Prepare development environment**:
 
